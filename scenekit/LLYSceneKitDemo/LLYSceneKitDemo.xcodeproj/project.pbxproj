@@ -19,6 +19,8 @@
 		0A245A771ED07DF60064D63D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A245A761ED07DF60064D63D /* art.scnassets */; };
 		0A245A7A1ED1A2570064D63D /* AchievementCardLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A791ED1A2560064D63D /* AchievementCardLayer.m */; };
 		0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A7C1ED1A2940064D63D /* AchievementCardView.m */; };
+		0AFCEC401ED58075004FAF6A /* stars.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3E1ED58075004FAF6A /* stars.scnp */; };
+		0AFCEC411ED58075004FAF6A /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3F1ED58075004FAF6A /* star.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		0A245A791ED1A2560064D63D /* AchievementCardLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardLayer.m; sourceTree = "<group>"; };
 		0A245A7B1ED1A2940064D63D /* AchievementCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementCardView.h; sourceTree = "<group>"; };
 		0A245A7C1ED1A2940064D63D /* AchievementCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardView.m; sourceTree = "<group>"; };
+		0AFCEC3E1ED58075004FAF6A /* stars.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = stars.scnp; sourceTree = "<group>"; };
+		0AFCEC3F1ED58075004FAF6A /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 		0A245A341ED07CE10064D63D = {
 			isa = PBXGroup;
 			children = (
+				0AFCEC3E1ED58075004FAF6A /* stars.scnp */,
+				0AFCEC3F1ED58075004FAF6A /* star.png */,
 				0A245A3F1ED07CE10064D63D /* LLYSceneKitDemo */,
 				0A245A591ED07CE10064D63D /* LLYSceneKitDemoTests */,
 				0A245A641ED07CE10064D63D /* LLYSceneKitDemoUITests */,
@@ -278,6 +284,8 @@
 				0A245A771ED07DF60064D63D /* art.scnassets in Resources */,
 				0A245A4D1ED07CE10064D63D /* Assets.xcassets in Resources */,
 				0A245A4B1ED07CE10064D63D /* Main.storyboard in Resources */,
+				0AFCEC401ED58075004FAF6A /* stars.scnp in Resources */,
+				0AFCEC411ED58075004FAF6A /* star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +554,7 @@
 				0A245A6C1ED07CE10064D63D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A245A6D1ED07CE10064D63D /* Build configuration list for PBXNativeTarget "LLYSceneKitDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -554,6 +563,7 @@
 				0A245A6F1ED07CE10064D63D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A245A701ED07CE10064D63D /* Build configuration list for PBXNativeTarget "LLYSceneKitDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -562,6 +572,7 @@
 				0A245A721ED07CE10064D63D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

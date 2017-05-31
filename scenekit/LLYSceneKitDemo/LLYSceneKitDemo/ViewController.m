@@ -121,6 +121,8 @@ static const CGFloat kAnimationTime = 1;
     
 //    CABasicAnimation *posAnimation = [self positionAnimationWithCurPos:SCNVector3Make(-4.3, 7.3, 0) tarPos:SCNVector3Make(0, 0, 0) dur:kAnimationTime];
 //    [_myNode addAnimation:posAnimation forKey:@"posAnimation"];
+    
+    
     CABasicAnimation *opacityAni = [self opacityAnimationWithCurOpacity:0 tarOpacity:1 dur:kAnimationTime];
     [_myNode addAnimation:opacityAni forKey:@"opacityAnimation"];
     

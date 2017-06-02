@@ -395,7 +395,7 @@ static const CGFloat kAnimationTime = 1;
         SCNLight *light = [SCNLight light];
         light.type = SCNLightTypeOmni;
         light.castsShadow = true;
-        light.color = [UIColor redColor];
+        light.color = [UIColor yellowColor];
         light.shadowMode = SCNShadowModeForward;
         _lightNode.light = light;
         //    lightNode.orientation = SCNVector4(0.0, 0.0, 1.0, 0.0);
@@ -415,7 +415,7 @@ static const CGFloat kAnimationTime = 1;
         _ambientLightNode = [SCNNode node];
         _ambientLightNode.light = [SCNLight light];
         _ambientLightNode.light.type = SCNLightTypeAmbient;
-        _ambientLightNode.light.color = [UIColor redColor];
+        _ambientLightNode.light.color = [UIColor yellowColor];
         _ambientLightNode.position = SCNVector3Make(0, 100, 100);
     }
     return _ambientLightNode;
@@ -476,6 +476,7 @@ static const CGFloat kAnimationTime = 1;
     [self.myScene.rootNode addChildNode:self.myNode];
     
     [self.myNode addChildNode:self.particleNode];
+    
 
     
     // retrieve the ship node
@@ -586,8 +587,8 @@ static const CGFloat kAnimationTime = 1;
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panHandle:)];
     [self.view addGestureRecognizer:panGesture];
     
-    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandle:)];
-    [self.view addGestureRecognizer:swipeGesture];
+//    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandle:)];
+//    [self.view addGestureRecognizer:swipeGesture];
     
 }
 
@@ -701,6 +702,7 @@ static const CGFloat kAnimationTime = 1;
 //            [_myNode runAction:[SCNAction repeatAction:rotateAct count:1]];
             
             CGFloat angleInt = floor(self.curAngle/M_PI) * M_PI;
+            
             
             [SCNTransaction begin];
             [SCNTransaction setAnimationDuration:0.5];

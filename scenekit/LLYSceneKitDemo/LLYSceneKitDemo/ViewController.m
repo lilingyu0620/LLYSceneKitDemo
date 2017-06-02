@@ -27,6 +27,7 @@ static const CGFloat kAnimationTime = 1;
 
 @property (nonatomic,assign) CGFloat lastPtx;
 @property (nonatomic,assign) CGFloat curPtx;
+@property (nonatomic,assign) CGFloat curAngle;
 
 @property (nonatomic,assign) SCNMatrix4 rotateYMat;
 @property (nonatomic,assign) SCNMatrix4 aniMat;
@@ -46,8 +47,10 @@ static const CGFloat kAnimationTime = 1;
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor blackColor];
     self.aniMat = SCNMatrix4Identity;
+    self.curAngle = 6.2;
     
     [self addAchimentCards];
+    [self addGestures];
     
 }
 
@@ -201,38 +204,6 @@ static const CGFloat kAnimationTime = 1;
     return _myView;
 }
 
-
-- (void)addGestures{
-
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHandle:)];
-    [self.view addGestureRecognizer:tapGesture];
-    
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panHandle:)];
-    [self.view addGestureRecognizer:panGesture];
-    
-    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandle:)];
-    [self.view addGestureRecognizer:swipeGesture];
-
-}
-
-- (void)tapHandle:(UIGestureRecognizer *)gesture{
-
-    
-    
-}
-
-- (void)panHandle:(UIGestureRecognizer *)gesture{
-    
-    
-
-}
-
-- (void)swipeHandle:(UIGestureRecognizer *)gesture{
-
-
-    
-
-}
 
 - (SCNNode *)myNode{
 
@@ -459,13 +430,13 @@ static const CGFloat kAnimationTime = 1;
         spotLight.type = SCNLightTypeSpot;// 设置类型
         spotLight.color = [UIColor whiteColor]; // 设置光的颜色
         spotLight.castsShadow = TRUE;// 捕捉阴影
-        spotLight.attenuationStartDistance = 0;
-        spotLight.attenuationEndDistance = 100;
-        spotLight.attenuationFalloffExponent = 2;
+//        spotLight.attenuationStartDistance = 0;
+//        spotLight.attenuationEndDistance = 100;
+//        spotLight.attenuationFalloffExponent = 2;
         spotLight.spotInnerAngle = 0;
         spotLight.spotOuterAngle = 30;
         _spotNode = [SCNNode node];
-        _spotNode.position = SCNVector3Make(0, 2, 10); //设置光源节点的位置
+        _spotNode.position = SCNVector3Make(0, 10, 100); //设置光源节点的位置
         _spotNode.light  = spotLight;
     }
     
@@ -534,75 +505,256 @@ static const CGFloat kAnimationTime = 1;
 
 
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-
-    UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:self.view];
-    self.lastPtx = self.curPtx = pt.x;
-   
-    self.rotateYMat = self.myNode.pivot;
-    
-}
-
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-
-    UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:self.view];
-    self.curPtx = pt.x;
-
-    CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
-    CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
-    NSLog(@"angle = %f",angle);
-    
-    if (self.lastPtx > self.curPtx) {
-        //左滑
-        SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(angle, 0, 1, 0);
-        self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
-    }
-    else if (self.lastPtx < self.curPtx){
-    
-        //右滑
-        SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
-        self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
-    }
-
-}
-
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-
-    
-    UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:self.view];
-    
-    
-    CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
-    CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
-    CGFloat targetAngle = floor(angle / M_PI_2) * M_PI;
-    
-    NSLog(@"targetAngle = %f",targetAngle);
-
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//
+//    UITouch *touch = [touches anyObject];
+//    CGPoint pt = [touch locationInView:self.view];
+//    self.lastPtx = self.curPtx = pt.x;
+//   
 //    self.rotateYMat = self.myNode.pivot;
+//    
+//}
+//
+//- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//
+//    UITouch *touch = [touches anyObject];
+//    CGPoint pt = [touch locationInView:self.view];
+//    self.curPtx = pt.x;
+//
+//    CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
+//    CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+//    NSLog(@"angle = %f",angle);
+//    
+//    if (self.lastPtx > self.curPtx) {
+//        //左滑
+//        SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(angle, 0, 1, 0);
+//        self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
+//    }
+//    else if (self.lastPtx < self.curPtx){
+//    
+//        //右滑
+//        SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
+//        self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
+//    }
+//
+//}
+//
+//- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//
+//    
+//    UITouch *touch = [touches anyObject];
+//    CGPoint pt = [touch locationInView:self.view];
+//    
+//    
+//    CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
+//    CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+//    CGFloat targetAngle = floor(angle / M_PI_2) * M_PI;
+//    
+//    NSLog(@"targetAngle = %f",targetAngle);
+//
+////    self.rotateYMat = self.myNode.pivot;
+//
+//    if (self.lastPtx > self.curPtx) {
+//        //左滑
+//        self.aniMat = SCNMatrix4MakeRotation(targetAngle, 0, 1, 0);
+//        
+//    }
+//    else if (self.lastPtx < self.curPtx){
+//        //右滑
+//        self.aniMat = SCNMatrix4MakeRotation(-targetAngle, 0, 1, 0);
+//    }
+//    
+//    [SCNTransaction begin];
+//    [SCNTransaction setAnimationDuration:0.5];
+//    [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//    
+//    self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
+//    
+//    [SCNTransaction commit];
+//    
+//    self.lastPtx = self.curPtx = pt.x;
+//
+//}
 
-    if (self.lastPtx > self.curPtx) {
-        //左滑
-        self.aniMat = SCNMatrix4MakeRotation(targetAngle, 0, 1, 0);
-        
-    }
-    else if (self.lastPtx < self.curPtx){
-        //右滑
-        self.aniMat = SCNMatrix4MakeRotation(-targetAngle, 0, 1, 0);
-    }
-    
-    [SCNTransaction begin];
-    [SCNTransaction setAnimationDuration:0.5];
-    [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    
-    self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
-    
-    [SCNTransaction commit];
-    
-    self.lastPtx = self.curPtx = pt.x;
+#pragma mark - UIGesture
 
+- (void)addGestures{
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapHandle:)];
+    [self.view addGestureRecognizer:tapGesture];
+    
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panHandle:)];
+    [self.view addGestureRecognizer:panGesture];
+    
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeHandle:)];
+    [self.view addGestureRecognizer:swipeGesture];
+    
+}
+
+- (void)tapHandle:(UIGestureRecognizer *)gesture{
+    
+    CGPoint pt = [gesture locationInView:self.view];
+    
+}
+
+- (void)panHandle:(UIPanGestureRecognizer *)gesture{
+    
+    CGPoint pt = [gesture locationInView:self.view];
+    
+//    NSLog(@"panpoint x = %f , y = %f",pt.x,pt.y);
+    CGPoint velocityPt = [gesture velocityInView:self.view];
+    NSLog(@"velocityPt x = %f , y = %f",velocityPt.x,velocityPt.y);
+    CGFloat velocityX = fabs(velocityPt.x);
+
+    
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            NSLog(@"pan began");
+            
+            SCNVector4 rotateVec = self.myNode.rotation;
+            
+            self.lastPtx = self.curPtx = pt.x;
+            
+            self.rotateYMat = self.myNode.pivot;
+            
+            
+        }
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+        {
+            NSLog(@"pan changed");
+            
+            self.curPtx = pt.x;
+            
+            CGFloat offsetX = self.curPtx - self.lastPtx;//fabs(self.lastPtx - self.curPtx);
+            CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+            angle += self.curAngle;
+            
+            NSLog(@"angle = %f",angle);
+
+            
+//            self.myNode.transform = SCNMatrix4MakeRotation(angle, 0, 1, 0);
+//            SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
+//            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
+            self.myNode.rotation = SCNVector4Make(0, 1, 0, angle);
+
+            
+//            if (self.lastPtx > self.curPtx) {
+//                //左滑
+//                SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(angle, 0, 1, 0);
+////                self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
+//            }
+//            else if (self.lastPtx < self.curPtx){
+//                
+//                //右滑
+//                SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
+////                self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
+//            }
+        }
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+        {
+            NSLog(@"pan end");
+            
+            CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
+            CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+            CGFloat targetAngle = floor(angle / M_PI_2) * M_PI;
+            
+            if (200 < velocityX && velocityX < 1000) {
+                targetAngle = M_PI;
+            }
+            else if (1000 <= velocityX && velocityX < 2000){
+                targetAngle = M_PI*2;
+            }
+            else if (2000 <= velocityX && velocityX < 4000){
+                targetAngle = M_PI*3;
+            }
+            else if (4000 <= velocityX){
+                targetAngle = M_PI*4;
+            }
+            
+//            NSLog(@"targetAngle = %f",targetAngle);
+            
+            if (velocityPt.x < 0) {
+                targetAngle = -targetAngle;
+            }
+            
+            //    self.rotateYMat = self.myNode.pivot;
+            
+//            self.aniMat = SCNMatrix4MakeRotation(M_PI*3, 0, 1, 0);
+            
+//            if (self.lastPtx > self.curPtx) {
+//                //左滑
+//                self.aniMat = SCNMatrix4MakeRotation(targetAngle, 0, 1, 0);
+//                
+//            }
+//            else if (self.lastPtx < self.curPtx){
+//                //右滑
+//                self.aniMat = SCNMatrix4MakeRotation(-targetAngle, 0, 1, 0);
+//            }
+            
+//            SCNAction *rotateAct = [SCNAction rotateByX:0 y:targetAngle z:0 duration:.5];
+//            //        rotateAct.timingMode = SCNActionTimingModeEaseInEaseOut;
+//            [_myNode runAction:[SCNAction repeatAction:rotateAct count:1]];
+            
+            CGFloat angleInt = floor(self.curAngle/M_PI) * M_PI;
+            
+            [SCNTransaction begin];
+            [SCNTransaction setAnimationDuration:0.5];
+            [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+            [SCNTransaction setCompletionBlock:^{
+    
+                [SCNTransaction begin];
+                [SCNTransaction setAnimationDuration:0.5];
+                [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                [SCNTransaction setCompletionBlock:^{
+                   
+                    [SCNTransaction begin];
+                    [SCNTransaction setAnimationDuration:0.5];
+                    [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                    
+                    //            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
+                    self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt);
+                    
+                    [SCNTransaction commit];
+                    
+                }];
+                
+                self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt - M_PI_2/5);
+                [SCNTransaction commit];
+                
+                //            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
+            }];
+            
+            self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt + M_PI_2/2);
+            [SCNTransaction commit];
+            
+//            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
+            
+//            CABasicAnimation *rotateAni = [CABasicAnimation animationWithKeyPath:@"rotation"];
+//            rotateAni.delegate = self;
+//            rotateAni.fromValue = [NSValue valueWithSCNVector4:SCNVector4Make(0, -1, 0, self.curAngle)];
+//            rotateAni.toValue = [NSValue valueWithSCNVector4:SCNVector4Make(0, -1, 0, targetAngle + angleInt)];
+//            rotateAni.duration = 0.5;
+//            rotateAni.removedOnCompletion = NO;
+//            rotateAni.fillMode = kCAFillModeForwards;
+//            [self.myNode addAnimation:rotateAni forKey:@"rotationAni"];
+            
+            self.curAngle = angleInt + targetAngle;
+            
+            self.lastPtx = self.curPtx = pt.x;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    
 }
 
 
@@ -622,6 +774,13 @@ static const CGFloat kAnimationTime = 1;
         self.cardView.hidden = NO;
         [self.myView removeFromSuperview];
     }
+    
+    CAAnimation *aniRotation = [self.myNode animationForKey:@"rotationAni"];
+    if ([[aniRotation valueForKey:@"keyPath"] isEqualToString:[anim valueForKey:@"keyPath"]]) {
+//        self.myNode.rotation = SCNVector4Make(0, 1, 0, self.curAngle);
+    }
+    
+
 
 }
 

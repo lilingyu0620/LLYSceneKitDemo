@@ -12,12 +12,19 @@
 
 static const CGFloat kAnimationTime = 1;
 
-@interface ViewController ()<CAAnimationDelegate>
+@interface ViewController ()<CAAnimationDelegate,SCNSceneRendererDelegate>
 
 @property (nonatomic,strong) SCNScene *myScene;
 @property (nonatomic,strong) SCNNode *myNode;
 @property (nonatomic,strong) SCNView *myView;
-@property (nonatomic,strong) SCNNode *lightNode;
+@property (nonatomic,strong) SCNNode *leftLightNode;
+@property (nonatomic,strong) SCNNode *rightLightNode;
+@property (nonatomic,strong) SCNNode *topLightNode;
+@property (nonatomic,strong) SCNNode *bottomLightNode;
+
+
+
+
 @property (nonatomic,strong) SCNNode *ambientLightNode;
 @property (nonatomic,strong) SCNNode *spotNode;
 
@@ -73,9 +80,9 @@ static const CGFloat kAnimationTime = 1;
 //    [self.myView removeFromSuperview];
     [self.backBtn removeFromSuperview];
     
-    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.03, .03, .03) toScale:SCNVector3Make(.01, .01, .01) dur:kAnimationTime];
-    scaleAni.delegate = self;
-    [_myNode addAnimation:scaleAni forKey:@"scaleBackAnimation"];
+//    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.03, .03, .03) toScale:SCNVector3Make(.01, .01, .01) dur:kAnimationTime];
+//    scaleAni.delegate = self;
+//    [_myNode addAnimation:scaleAni forKey:@"scaleBackAnimation"];
     
 //    CABasicAnimation *posAnimation = [self positionAnimationWithCurPos:SCNVector3Make(0, 0, 0) tarPos:SCNVector3Make(-4.3, 7.3, 0) dur:0.5];
 //    posAnimation.delegate = self;
@@ -118,20 +125,20 @@ static const CGFloat kAnimationTime = 1;
     
     [self initScene];
     
-    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.01, .01, .01) toScale:SCNVector3Make(.03, 0.03, .03) dur:kAnimationTime];
-//    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.1, .1, .1) toScale:SCNVector3Make(.4, .4, .4) dur:kAnimationTime];
-    [_myNode addAnimation:scaleAni forKey:@"scaleAnimation"];
+//    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.01, .01, .01) toScale:SCNVector3Make(.03, 0.03, .03) dur:kAnimationTime];
+////    CABasicAnimation *scaleAni = [self scaleAnimation:SCNVector3Make(.1, .1, .1) toScale:SCNVector3Make(.4, .4, .4) dur:kAnimationTime];
+//    [_myNode addAnimation:scaleAni forKey:@"scaleAnimation"];
     
 //    CABasicAnimation *posAnimation = [self positionAnimationWithCurPos:SCNVector3Make(-4.3, 7.3, 0) tarPos:SCNVector3Make(0, 0, 0) dur:kAnimationTime];
 //    [_myNode addAnimation:posAnimation forKey:@"posAnimation"];
     
     
-    CABasicAnimation *opacityAni = [self opacityAnimationWithCurOpacity:0 tarOpacity:1 dur:kAnimationTime];
-    [_myNode addAnimation:opacityAni forKey:@"opacityAnimation"];
-    
-    SCNAction *rotateAct = [SCNAction rotateByX:0 y:M_PI z:0 duration:.5];
-    //        rotateAct.timingMode = SCNActionTimingModeEaseInEaseOut;
-    [_myNode runAction:[SCNAction repeatAction:rotateAct count:2]];
+//    CABasicAnimation *opacityAni = [self opacityAnimationWithCurOpacity:0 tarOpacity:1 dur:kAnimationTime];
+//    [_myNode addAnimation:opacityAni forKey:@"opacityAnimation"];
+//    
+//    SCNAction *rotateAct = [SCNAction rotateByX:0 y:M_PI z:0 duration:.5];
+//    //        rotateAct.timingMode = SCNActionTimingModeEaseInEaseOut;
+//    [_myNode runAction:[SCNAction repeatAction:rotateAct count:2]];
     
 }
 
@@ -198,7 +205,8 @@ static const CGFloat kAnimationTime = 1;
         _myView = [[SCNView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         _myView.center = self.view.center;
         _myView.backgroundColor = [UIColor blackColor];
-        _myView.showsStatistics = NO;
+        _myView.delegate = self;
+        
 
     }
     return _myView;
@@ -209,7 +217,7 @@ static const CGFloat kAnimationTime = 1;
 
     if (!_myNode) {
         
-//        _myNode = [SCNNode new];
+        _myNode = [SCNNode new];
 //        _myNode.geometry = [SCNCylinder cylinderWithRadius:4 height:1];
 //        _myNode.rotation = SCNVector4Make(1, 0, 0, M_PI_2);
 //        
@@ -238,14 +246,14 @@ static const CGFloat kAnimationTime = 1;
         
         NSURL *bundlePathUrl = [[NSBundle mainBundle] bundleURL];
         //    NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/art.scnassets/ship.dae",bundlePath]];
-        bundlePathUrl = [bundlePathUrl URLByAppendingPathComponent:@"art.scnassets/medle1.dae"];
-        
+        bundlePathUrl = [bundlePathUrl URLByAppendingPathComponent:@"art.scnassets/newmedle.dae"];
         
         SCNSceneSource *sceneSource = [SCNSceneSource sceneSourceWithURL:bundlePathUrl options:nil];
         
         
-//        SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/medle1.dae"];
-//        _myNode = [scene.rootNode childNodeWithName:@"medle1" recursively:YES];
+//        SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/newmodel.dae"];
+//        _myNode = [scene.rootNode childNodeWithName:@"m" recursively:YES];
+        
 //
 //        for (SCNNode *node in _myNode.childNodes) {
 //            NSLog(@"%@ %@",node.name,node.geometry);
@@ -253,38 +261,76 @@ static const CGFloat kAnimationTime = 1;
 //        
 ////        node.scale = SCNVector3Make(0.01, 0.01, 0.01);
 //        
-//        SCNNode *tmpNode = _myNode.childNodes[0];
+//
+//        // Get reference to the cube node
+//        _myNode = [sceneSource entryWithIdentifier:@"ID4" withClass:[SCNNode class]];
+        
+        _myNode = [sceneSource entryWithIdentifier:@"ID20" withClass:[SCNNode class]];
+        
+//        SCNNode *tmpNode = node1.childNodes[0];
 //        SCNGeometry *geo = tmpNode.geometry;
 //        _myNode = [SCNNode nodeWithGeometry:geo];
-//        
-//        // Get reference to the cube node
-        _myNode = [sceneSource entryWithIdentifier:@"ID4" withClass:[SCNNode class]];
+
         _myNode.position = SCNVector3Make(0, 0, 0);
-        _myNode.scale = SCNVector3Make(0.01, 0.01, 0.01);
+        _myNode.scale = SCNVector3Make(0.03, 0.03, 0.03);
+        _myNode.geometry.firstMaterial.doubleSided = NO;
+        _myNode.geometry.firstMaterial.locksAmbientWithDiffuse = NO;
+        _myNode.castsShadow = NO;
+
+
+
+        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+        myLabel.text = @"Hello world 12345667890";
+        myLabel.textAlignment = NSTextAlignmentCenter;
+        myLabel.font = [UIFont systemFontOfSize:18];
+        myLabel.textColor = [UIColor blackColor];
+        myLabel.backgroundColor = [UIColor colorWithRed:0.89 green:0.82 blue:0.62 alpha:1.00];
+        UIGraphicsBeginImageContext(myLabel.bounds.size);
+        
+        //        CGContextTranslateCTM(UIGraphicsGetCurrentContext(), 0, 30);
+        //
+        //        CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1.0, -1.0);
+        
+        [myLabel.layer renderInContext:UIGraphicsGetCurrentContext()];
+        
+        UIImage *layerImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        UIImage *testImg = [UIImage imageNamed:@"wk"];
+
+        SCNMaterial *secondMaterial = _myNode.geometry.materials[1];
+        secondMaterial.multiply.contents = layerImage;
+        secondMaterial.multiply.wrapS = SCNWrapModeClamp;
+        secondMaterial.multiply.wrapT = SCNWrapModeClamp;
+        secondMaterial.doubleSided = NO;
+//        secondMaterial.multiply.minificationFilter = SCNFilterModeNearest;
+//        secondMaterial.multiply.magnificationFilter = SCNFilterModeNearest;
+//        secondMaterial.multiply.mipFilter = SCNFilterModeNearest;
+        secondMaterial.locksAmbientWithDiffuse = YES;
+        
+        SCNMatrix4 scaleMatri = SCNMatrix4MakeScale(-1, 1, 1);
+        SCNMatrix4 rotateMatri = SCNMatrix4MakeRotation(M_PI, 0, 0, 1);
+        SCNMatrix4 transMatri = SCNMatrix4MakeTranslation(0, 5, 0);
+        
+//        secondMaterial.multiply.contentsTransform = rotateMatri;
+        
+        [_myNode.geometry replaceMaterialAtIndex:1 withMaterial:secondMaterial];
+
+//        _myNode.geometry.firstMaterial.diffuse.contents = testImg;
+//        _myNode.geometry.firstMaterial.diffuse.wrapT = SCNWrapModeClamp;
+//        _myNode.geometry.firstMaterial.diffuse.wrapS = SCNWrapModeClamp;
+        
+        
+        
+//        _myNode.geometry.firstMaterial.diffuse.contentsTransform = SCNMatrix4Mult(scaleMatri, rotateMatri);
+//        _myNode.geometry.firstMaterial.multiply.contentsTransform = scaleMatri;
 //
-//        
-//        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
-//        myLabel.text = @"Hello world 12345667890";
-//        myLabel.textAlignment = NSTextAlignmentCenter;
-//        myLabel.font = [UIFont systemFontOfSize:18];
-//        myLabel.textColor = [UIColor blackColor];
-//        myLabel.backgroundColor = [UIColor whiteColor];
-//        
-//        UIGraphicsBeginImageContext(myLabel.bounds.size);
-//        
-//        //        CGContextTranslateCTM(UIGraphicsGetCurrentContext(), 0, 30);
-//        //
-//        //        CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1.0, -1.0);
-//        
-//        [myLabel.layer renderInContext:UIGraphicsGetCurrentContext()];
-//        
-//        UIImage *layerImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        
-//        SCNMaterial *firstMaterial = [SCNMaterial material];
-//        firstMaterial.diffuse.contents = layerImage;
-//        firstMaterial.locksAmbientWithDiffuse = YES;
-//        
+//
+//        [_myNode addChildNode:node1];
+//        [_myNode addChildNode:node2];
+//        [_myNode addChildNode:node3];
+        
+//
 //        SCNMaterial *secondMaterial = [SCNMaterial material];
 //        UIImage *secondImage = [UIImage imageNamed:@"art.scnassets/texture.png"];
 //        secondMaterial.diffuse.contents = secondImage;
@@ -387,25 +433,75 @@ static const CGFloat kAnimationTime = 1;
     return _particleNode;
 }
 
-- (SCNNode *)lightNode{
+- (SCNNode *)leftLightNode{
 
-    if (!_lightNode) {
+    if (!_leftLightNode) {
         
-        _lightNode = [SCNNode node];
+        _leftLightNode = [SCNNode node];
         SCNLight *light = [SCNLight light];
         light.type = SCNLightTypeOmni;
         light.castsShadow = true;
-        light.color = [UIColor yellowColor];
+        light.color = [UIColor grayColor];
         light.shadowMode = SCNShadowModeForward;
-        _lightNode.light = light;
-        //    lightNode.orientation = SCNVector4(0.0, 0.0, 1.0, 0.0);
-        _lightNode.position = SCNVector3Make(0, 100, 100);
-        _lightNode.rotation = SCNVector4Make(1, 0, 0, -M_PI_2);
-        //    lightNode.light.intensity = 3000;
-        //    lightNode.light.shadowRadius = 20;
+        _leftLightNode.light = light;
+        _leftLightNode.position = SCNVector3Make(-10, 10, 0);
+        _leftLightNode.rotation = SCNVector4Make(1, 0, 0, -M_PI_2);
     }
     
-    return _lightNode;
+    return _leftLightNode;
+}
+
+- (SCNNode *)rightLightNode{
+    
+    if (!_rightLightNode) {
+        
+        _rightLightNode = [SCNNode node];
+        SCNLight *light = [SCNLight light];
+        light.type = SCNLightTypeOmni;
+        light.castsShadow = true;
+        light.color = [UIColor grayColor];
+        light.shadowMode = SCNShadowModeForward;
+        _rightLightNode.light = light;
+        _rightLightNode.position = SCNVector3Make(10, 10, 0);
+        _rightLightNode.rotation = SCNVector4Make(1, 0, 0, M_PI_2);
+    }
+    
+    return _rightLightNode;
+}
+
+- (SCNNode *)topLightNode{
+    
+    if (!_topLightNode) {
+        
+        _topLightNode = [SCNNode node];
+        SCNLight *light = [SCNLight light];
+        light.type = SCNLightTypeSpot;
+        light.castsShadow = true;
+        light.color = [UIColor whiteColor];
+        light.shadowMode = SCNShadowModeForward;
+        _topLightNode.light = light;
+        _topLightNode.position = SCNVector3Make(0, 8, 5);
+        _topLightNode.rotation = SCNVector4Make(1, 0, 0, -M_PI/3);
+    }
+    
+    return _topLightNode;
+}
+
+- (SCNNode *)bottomLightNode{
+
+    if (!_bottomLightNode) {
+        _bottomLightNode = [SCNNode node];
+        SCNLight *light = [SCNLight light];
+        light.type = SCNLightTypeOmni;
+        light.castsShadow = YES;
+        light.color = [UIColor lightGrayColor];
+        light.shadowMode = SCNShadowModeForward;
+        _bottomLightNode.light = light;
+        _bottomLightNode.position = SCNVector3Make(0, -3, 10);
+
+    }
+    
+    return _bottomLightNode;
 }
 
 
@@ -415,7 +511,7 @@ static const CGFloat kAnimationTime = 1;
         _ambientLightNode = [SCNNode node];
         _ambientLightNode.light = [SCNLight light];
         _ambientLightNode.light.type = SCNLightTypeAmbient;
-        _ambientLightNode.light.color = [UIColor yellowColor];
+        _ambientLightNode.light.color = [UIColor lightGrayColor];
         _ambientLightNode.position = SCNVector3Make(0, 100, 100);
     }
     return _ambientLightNode;
@@ -427,16 +523,16 @@ static const CGFloat kAnimationTime = 1;
         
         
         SCNLight *spotLight = [SCNLight light];// 创建光对象
-        spotLight.type = SCNLightTypeSpot;// 设置类型
+        spotLight.type = SCNLightTypeOmni;// 设置类型
         spotLight.color = [UIColor whiteColor]; // 设置光的颜色
-        spotLight.castsShadow = TRUE;// 捕捉阴影
-//        spotLight.attenuationStartDistance = 0;
-//        spotLight.attenuationEndDistance = 100;
-//        spotLight.attenuationFalloffExponent = 2;
-        spotLight.spotInnerAngle = 0;
-        spotLight.spotOuterAngle = 30;
+        spotLight.castsShadow = YES;
+        spotLight.shadowMode = SCNShadowModeForward;
+//        spotLight.zNear = 0.1;
+//        spotLight.zFar = 5;
+        spotLight.attenuationStartDistance = 6;
+        spotLight.attenuationEndDistance = 9;
         _spotNode = [SCNNode node];
-        _spotNode.position = SCNVector3Make(0, 10, 100); //设置光源节点的位置
+        _spotNode.position = SCNVector3Make(-2, 3, 5); //设置光源节点的位置
         _spotNode.light  = spotLight;
     }
     
@@ -465,10 +561,17 @@ static const CGFloat kAnimationTime = 1;
 //    cameraNode.rotation =  SCNVector4Make(1, 0, 0,-M_PI_4/4);
     
     // create and add a light to the scene
-    [self.myScene.rootNode addChildNode:self.lightNode];
+    [self.myScene.rootNode addChildNode:self.leftLightNode];
+    
+    [self.myScene.rootNode addChildNode:self.rightLightNode];
+
+//    [self.myScene.rootNode addChildNode:self.topLightNode];
     
     // create and add an ambient light to the scene
-    [self.myScene.rootNode addChildNode:self.ambientLightNode];
+//    [self.myScene.rootNode addChildNode:self.ambientLightNode];
+    
+    
+//    [self.myScene.rootNode addChildNode:self.bottomLightNode];
     
     //聚光灯
     [self.myScene.rootNode addChildNode:self.spotNode];
@@ -491,13 +594,14 @@ static const CGFloat kAnimationTime = 1;
 //     self.myView.allowsCameraControl = YES;
     
     self.myView.showsStatistics = YES;
-    self.myView.autoenablesDefaultLighting = YES;
+    self.myView.autoenablesDefaultLighting = NO;
+    self.myView.playing = true;
 
 }
 
 - (void)removeChildNode{
 
-    [self.lightNode removeFromParentNode];
+    [self.leftLightNode removeFromParentNode];
     [self.ambientLightNode removeFromParentNode];
     [self.cameraNode removeFromParentNode];
     [self.myNode removeFromParentNode];
@@ -613,12 +717,9 @@ static const CGFloat kAnimationTime = 1;
         {
             NSLog(@"pan began");
             
-            SCNVector4 rotateVec = self.myNode.rotation;
-            
             self.lastPtx = self.curPtx = pt.x;
             
             self.rotateYMat = self.myNode.pivot;
-            
             
         }
             break;
@@ -631,28 +732,12 @@ static const CGFloat kAnimationTime = 1;
             
             CGFloat offsetX = self.curPtx - self.lastPtx;//fabs(self.lastPtx - self.curPtx);
             CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+            
+//            self.spotNode.rotation = SCNVector4Make(0, 1, 0, angle);
+
             angle += self.curAngle;
-            
             NSLog(@"angle = %f",angle);
-
-            
-//            self.myNode.transform = SCNMatrix4MakeRotation(angle, 0, 1, 0);
-//            SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
-//            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
             self.myNode.rotation = SCNVector4Make(0, 1, 0, angle);
-
-            
-//            if (self.lastPtx > self.curPtx) {
-//                //左滑
-//                SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(angle, 0, 1, 0);
-////                self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
-//            }
-//            else if (self.lastPtx < self.curPtx){
-//                
-//                //右滑
-//                SCNMatrix4 rotateMat = SCNMatrix4MakeRotation(-angle, 0, 1, 0);
-////                self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, rotateMat);
-//            }
         }
             break;
             
@@ -660,8 +745,8 @@ static const CGFloat kAnimationTime = 1;
         {
             NSLog(@"pan end");
             
-            CGFloat offsetX = fabs(self.lastPtx - self.curPtx);
-            CGFloat angle = offsetX/self.view.frame.size.width * M_PI;
+            CGFloat offsetX = self.curPtx - self.lastPtx;
+            CGFloat angle = fabs(offsetX)/self.view.frame.size.width * M_PI;
             CGFloat targetAngle = floor(angle / M_PI_2) * M_PI;
             
             if (200 < velocityX && velocityX < 1000) {
@@ -677,76 +762,88 @@ static const CGFloat kAnimationTime = 1;
                 targetAngle = M_PI*4;
             }
             
-//            NSLog(@"targetAngle = %f",targetAngle);
-            
+            CGFloat curAngleInt = floor(self.curAngle/M_PI) * M_PI;
             if (velocityPt.x < 0) {
                 targetAngle = -targetAngle;
             }
             
-            //    self.rotateYMat = self.myNode.pivot;
-            
-//            self.aniMat = SCNMatrix4MakeRotation(M_PI*3, 0, 1, 0);
-            
-//            if (self.lastPtx > self.curPtx) {
-//                //左滑
-//                self.aniMat = SCNMatrix4MakeRotation(targetAngle, 0, 1, 0);
-//                
-//            }
-//            else if (self.lastPtx < self.curPtx){
-//                //右滑
-//                self.aniMat = SCNMatrix4MakeRotation(-targetAngle, 0, 1, 0);
-//            }
-            
-//            SCNAction *rotateAct = [SCNAction rotateByX:0 y:targetAngle z:0 duration:.5];
-//            //        rotateAct.timingMode = SCNActionTimingModeEaseInEaseOut;
-//            [_myNode runAction:[SCNAction repeatAction:rotateAct count:1]];
-            
-            CGFloat angleInt = floor(self.curAngle/M_PI) * M_PI;
-            
-            
+            //勋章动画
             [SCNTransaction begin];
             [SCNTransaction setAnimationDuration:0.5];
             [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
             [SCNTransaction setCompletionBlock:^{
     
                 [SCNTransaction begin];
-                [SCNTransaction setAnimationDuration:0.5];
+                [SCNTransaction setAnimationDuration:0.2];
                 [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
                 [SCNTransaction setCompletionBlock:^{
                    
                     [SCNTransaction begin];
-                    [SCNTransaction setAnimationDuration:0.5];
+                    [SCNTransaction setAnimationDuration:0.2];
                     [SCNTransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
                     
-                    //            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
-                    self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt);
+                    self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + curAngleInt);
+//                    self.spotNode.rotation = SCNVector4Make(0, 1, 0, 0);
                     
                     [SCNTransaction commit];
                     
                 }];
                 
-                self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt - M_PI_2/5);
+                SCNVector4 rotationVec,spotRotateVec;
+                if (targetAngle == 0) {
+                    if (offsetX < 0) {
+                        rotationVec = SCNVector4Make(0, 1, 0, curAngleInt - M_PI_2/5);
+                        spotRotateVec = SCNVector4Make(0, 1, 0,- M_PI_2/5);
+                    }
+                    else{
+                        rotationVec = SCNVector4Make(0, 1, 0, curAngleInt + M_PI_2/5);
+                        spotRotateVec = SCNVector4Make(0, 1, 0, M_PI_2/5);
+                    }
+                }
+                else{
+                    if (targetAngle > 0) {
+                        rotationVec = SCNVector4Make(0, 1, 0, targetAngle + curAngleInt - M_PI_2/5);
+                        spotRotateVec = SCNVector4Make(0, 1, 0,- M_PI_2/5);
+                    }
+                    else{
+                        rotationVec = SCNVector4Make(0, 1, 0, targetAngle + curAngleInt + M_PI_2/5);
+                        spotRotateVec = SCNVector4Make(0, 1, 0, M_PI_2/5);
+                    }
+                }
+                                self.myNode.rotation = rotationVec;
+//                self.spotNode.rotation = spotRotateVec;
+
                 [SCNTransaction commit];
                 
-                //            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
             }];
             
-            self.myNode.rotation = SCNVector4Make(0, 1, 0, targetAngle + angleInt + M_PI_2/2);
+            SCNVector4 rotationVec,spotRotateVec;
+            if (targetAngle == 0) {
+                if (offsetX < 0) {
+                    rotationVec = SCNVector4Make(0, 1, 0, curAngleInt + M_PI_2/2);
+                    spotRotateVec = SCNVector4Make(0, 1, 0, M_PI_2/2);
+                }
+                else{
+                    rotationVec = SCNVector4Make(0, 1, 0, curAngleInt - M_PI_2/2);
+                    spotRotateVec = SCNVector4Make(0, 1, 0, - M_PI_2/2);
+                }
+                
+            }else{
+            
+                if (targetAngle > 0) {
+                    rotationVec = SCNVector4Make(0, 1, 0, targetAngle + curAngleInt + M_PI_2/2);
+                    spotRotateVec = SCNVector4Make(0, 1, 0, M_PI_2/2);
+                }
+                else{
+                    rotationVec = SCNVector4Make(0, 1, 0, targetAngle + curAngleInt - M_PI_2/2);
+                    spotRotateVec = SCNVector4Make(0, 1, 0, - M_PI_2/2);
+                }
+            }
+            
+            self.myNode.rotation = rotationVec;
             [SCNTransaction commit];
             
-//            self.myNode.pivot = SCNMatrix4Mult(self.rotateYMat, self.aniMat);
-            
-//            CABasicAnimation *rotateAni = [CABasicAnimation animationWithKeyPath:@"rotation"];
-//            rotateAni.delegate = self;
-//            rotateAni.fromValue = [NSValue valueWithSCNVector4:SCNVector4Make(0, -1, 0, self.curAngle)];
-//            rotateAni.toValue = [NSValue valueWithSCNVector4:SCNVector4Make(0, -1, 0, targetAngle + angleInt)];
-//            rotateAni.duration = 0.5;
-//            rotateAni.removedOnCompletion = NO;
-//            rotateAni.fillMode = kCAFillModeForwards;
-//            [self.myNode addAnimation:rotateAni forKey:@"rotationAni"];
-            
-            self.curAngle = angleInt + targetAngle;
-            
+            self.curAngle = curAngleInt + targetAngle;
             self.lastPtx = self.curPtx = pt.x;
         }
             break;
@@ -754,9 +851,6 @@ static const CGFloat kAnimationTime = 1;
         default:
             break;
     }
-    
-    
-    
 }
 
 
@@ -787,6 +881,10 @@ static const CGFloat kAnimationTime = 1;
 }
 
 
+- (void)renderer:(id <SCNSceneRenderer>)renderer updateAtTime:(NSTimeInterval)time{
+
+    NSLog(@"render======");
+}
 
 
 

@@ -265,14 +265,14 @@ static const CGFloat kAnimationTime = 1;
 //        // Get reference to the cube node
 //        _myNode = [sceneSource entryWithIdentifier:@"ID4" withClass:[SCNNode class]];
         
-        _myNode = [sceneSource entryWithIdentifier:@"ID20" withClass:[SCNNode class]];
+        _myNode = [sceneSource entryWithIdentifier:@"ID33" withClass:[SCNNode class]];
         
 //        SCNNode *tmpNode = node1.childNodes[0];
 //        SCNGeometry *geo = tmpNode.geometry;
 //        _myNode = [SCNNode nodeWithGeometry:geo];
 
         _myNode.position = SCNVector3Make(0, 0, 0);
-        _myNode.scale = SCNVector3Make(0.03, 0.03, 0.03);
+        _myNode.scale = SCNVector3Make(0.02, 0.02, 0.02);
         _myNode.geometry.firstMaterial.doubleSided = NO;
         _myNode.geometry.firstMaterial.locksAmbientWithDiffuse = NO;
         _myNode.castsShadow = NO;
@@ -280,7 +280,8 @@ static const CGFloat kAnimationTime = 1;
 
 
         UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-        myLabel.text = @"Hello world 12345667890";
+        myLabel.numberOfLines = 0;
+        myLabel.text = @"Hello world!\n\n12345667890\n\nllllllllllllyyy";
         myLabel.textAlignment = NSTextAlignmentCenter;
         myLabel.font = [UIFont systemFontOfSize:18];
         myLabel.textColor = [UIColor blackColor];
@@ -297,8 +298,30 @@ static const CGFloat kAnimationTime = 1;
         UIGraphicsEndImageContext();
         
         UIImage *testImg = [UIImage imageNamed:@"wk"];
+        
+        
+//        let flipImage = UIImage(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation(rawValue: flipImageOrientation)!)
+//        board.image = flipImage
 
-        SCNMaterial *secondMaterial = _myNode.geometry.materials[1];
+        
+        //水平翻转
+        /******* 另外一种水平镜像翻转的写法 ***********/
+        //Quartz重绘图片
+        CGRect rect =  CGRectMake(0, 0, layerImage.size.width , layerImage.size.height);//创建矩形框
+        //根据size大小创建一个基于位图的图形上下文
+        UIGraphicsBeginImageContext(rect.size);
+        //        UIGraphicsBeginImageContextWithOptions(rect.size, false, 2)
+        CGContextRef currentContext = UIGraphicsGetCurrentContext();//获取当前quartz 2d绘图环境
+        CGContextClipToRect(currentContext, rect);//设置当前绘图环境到矩形框
+        CGContextRotateCTM(currentContext, M_PI); //旋转180度
+        //平移， 这里是平移坐标系，跟平移图形是一个道理
+        CGContextTranslateCTM(currentContext, -rect.size.width, -rect.size.height);
+        CGContextDrawImage(currentContext, rect, layerImage.CGImage);//绘图
+        //翻转图片
+        UIImage *flipImage =  UIGraphicsGetImageFromCurrentImageContext();//获得图片
+        
+        SCNGeometry *geo = _myNode.geometry;
+        SCNMaterial *secondMaterial = _myNode.geometry.materials[2];
         secondMaterial.multiply.contents = layerImage;
         secondMaterial.multiply.wrapS = SCNWrapModeClamp;
         secondMaterial.multiply.wrapT = SCNWrapModeClamp;
@@ -308,77 +331,11 @@ static const CGFloat kAnimationTime = 1;
 //        secondMaterial.multiply.mipFilter = SCNFilterModeNearest;
         secondMaterial.locksAmbientWithDiffuse = YES;
         
-        SCNMatrix4 scaleMatri = SCNMatrix4MakeScale(-1, 1, 1);
-        SCNMatrix4 rotateMatri = SCNMatrix4MakeRotation(M_PI, 0, 0, 1);
-        SCNMatrix4 transMatri = SCNMatrix4MakeTranslation(0, 5, 0);
+        SCNMatrix4 rotateMatri = SCNMatrix4MakeRotation(1.6, 0, 0, -1);
+        SCNMatrix4 transMatri = SCNMatrix4MakeTranslation(0.03, 1, 0);
+        secondMaterial.multiply.contentsTransform = SCNMatrix4Mult(rotateMatri, transMatri);
         
-//        secondMaterial.multiply.contentsTransform = rotateMatri;
-        
-        [_myNode.geometry replaceMaterialAtIndex:1 withMaterial:secondMaterial];
-
-//        _myNode.geometry.firstMaterial.diffuse.contents = testImg;
-//        _myNode.geometry.firstMaterial.diffuse.wrapT = SCNWrapModeClamp;
-//        _myNode.geometry.firstMaterial.diffuse.wrapS = SCNWrapModeClamp;
-        
-        
-        
-//        _myNode.geometry.firstMaterial.diffuse.contentsTransform = SCNMatrix4Mult(scaleMatri, rotateMatri);
-//        _myNode.geometry.firstMaterial.multiply.contentsTransform = scaleMatri;
-//
-//
-//        [_myNode addChildNode:node1];
-//        [_myNode addChildNode:node2];
-//        [_myNode addChildNode:node3];
-        
-//
-//        SCNMaterial *secondMaterial = [SCNMaterial material];
-//        UIImage *secondImage = [UIImage imageNamed:@"art.scnassets/texture.png"];
-//        secondMaterial.diffuse.contents = secondImage;
-//        secondMaterial.locksAmbientWithDiffuse = YES;
-//        
-//        
-//        
-//        SCNMaterial *greenMaterial              = [SCNMaterial material];
-//        greenMaterial.diffuse.contents          = [UIColor greenColor];
-//        greenMaterial.locksAmbientWithDiffuse   = YES;
-//        
-//        SCNMaterial *redMaterial                = [SCNMaterial material];
-//        redMaterial.diffuse.contents            = [UIColor redColor];
-//        redMaterial.locksAmbientWithDiffuse     = YES;
-//        
-//        SCNMaterial *blueMaterial               = [SCNMaterial material];
-//        blueMaterial.diffuse.contents           = [UIColor blueColor];
-//        blueMaterial.locksAmbientWithDiffuse    = YES;
-//        
-//        SCNMaterial *yellowMaterial             = [SCNMaterial material];
-//        yellowMaterial.diffuse.contents         = [UIColor yellowColor];
-//        yellowMaterial.locksAmbientWithDiffuse  = YES;
-//        
-//        SCNMaterial *purpleMaterial             = [SCNMaterial material];
-//        purpleMaterial.diffuse.contents         = [UIColor purpleColor];
-//        purpleMaterial.locksAmbientWithDiffuse  = YES;
-//        
-//        
-//        _myNode.geometry.firstMaterial.diffuse.contents = secondImage;
-//        _myNode.geometry.firstMaterial.diffuse.wrapS = SCNWrapModeRepeat;
-//        _myNode.geometry.firstMaterial.diffuse.wrapT = SCNWrapModeRepeat;
-//        _myNode.geometry.firstMaterial.doubleSided = false;
-//        _myNode.geometry.firstMaterial.locksAmbientWithDiffuse = true;
-//        
-//        _myNode.geometry.firstMaterial.multiply.contents = layerImage;
-//        
-//        
-
-        
-//        _myNode.geometry.firstMaterial.multiply.contentsTransform = SCNMatrix4MakeScale(.1, .1, .1);
-//        [_myNode.geometry replaceMaterialAtIndex:1 withMaterial:silverMaterial];
-        
-        
-//        SCNBox *box = [SCNBox boxWithWidth:6 height:6 length:6 chamferRadius:0];
-//        geo.materials = @[secondMaterial,firstMaterial];
-//        _myNode = [SCNNode nodeWithGeometry:box];
-//        _myNode.position = SCNVector3Make(0, 0, 0);
-        
+        [_myNode.geometry replaceMaterialAtIndex:2 withMaterial:secondMaterial];
         
     }
 
@@ -570,9 +527,6 @@ static const CGFloat kAnimationTime = 1;
     // create and add an ambient light to the scene
 //    [self.myScene.rootNode addChildNode:self.ambientLightNode];
     
-    
-//    [self.myScene.rootNode addChildNode:self.bottomLightNode];
-    
     //聚光灯
     [self.myScene.rootNode addChildNode:self.spotNode];
     
@@ -581,7 +535,6 @@ static const CGFloat kAnimationTime = 1;
     [self.myNode addChildNode:self.particleNode];
     
 
-    
     // retrieve the ship node
     SCNNode *ship = [self.myScene.rootNode childNodeWithName:@"ship" recursively:YES];
     [ship setHidden:YES];
@@ -589,9 +542,6 @@ static const CGFloat kAnimationTime = 1;
     
     // set the scene to the view
     self.myView.scene = self.myScene;
-    
-    // allows the user to manipulate the camera
-//     self.myView.allowsCameraControl = YES;
     
     self.myView.showsStatistics = YES;
     self.myView.autoenablesDefaultLighting = NO;

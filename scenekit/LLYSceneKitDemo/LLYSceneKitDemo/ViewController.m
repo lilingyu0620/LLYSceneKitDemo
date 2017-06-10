@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import <SceneKit/SceneKit.h>
 #import "AchievementCardView.h"
+#import "UIImage+Crop.h"
 
 static const CGFloat kAnimationTime = 1;
 
@@ -277,14 +278,24 @@ static const CGFloat kAnimationTime = 1;
         _myNode.geometry.firstMaterial.locksAmbientWithDiffuse = NO;
         _myNode.castsShadow = NO;
 
+        
+        NSDictionary *attrDic = @{
+                                  NSFontAttributeName: [UIFont systemFontOfSize:15],
+                                  NSForegroundColorAttributeName: [UIColor redColor]
+                                  };
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc]initWithString:@"Hello world!\n\n12345667890\nllllllllllllyyy" attributes:attrDic];
+        [attString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 12)];
+        [attString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:25] range:NSMakeRange(14, 11)];
 
+        
 
         UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
         myLabel.numberOfLines = 0;
-        myLabel.text = @"Hello world!\n\n12345667890\n\nllllllllllllyyy";
+//        myLabel.text = @"Hello world!\n\n12345667890\n\nllllllllllllyyy";
+        myLabel.attributedText = attString;
         myLabel.textAlignment = NSTextAlignmentCenter;
-        myLabel.font = [UIFont systemFontOfSize:18];
-        myLabel.textColor = [UIColor blackColor];
+//        myLabel.font = [UIFont systemFontOfSize:18];
+//        myLabel.textColor = [UIColor blackColor];
         myLabel.backgroundColor = [UIColor colorWithRed:0.89 green:0.82 blue:0.62 alpha:1.00];
         UIGraphicsBeginImageContext(myLabel.bounds.size);
         
@@ -298,6 +309,14 @@ static const CGFloat kAnimationTime = 1;
         UIGraphicsEndImageContext();
         
         UIImage *testImg = [UIImage imageNamed:@"wk"];
+        UIImage *smallImage = [UIImage image:testImg scaleToSize:CGSizeMake(64, 64)];
+        UIImage *circleImage = [smallImage circleImage];
+        
+        UIGraphicsBeginImageContext(layerImage.size);
+        [layerImage drawInRect:CGRectMake(0, 0, layerImage.size.width, layerImage.size.height)];
+        [circleImage drawInRect:CGRectMake(128, 220, circleImage.size.width, circleImage.size.height)];
+        UIImage *togetherImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
         
         
 //        let flipImage = UIImage(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation(rawValue: flipImageOrientation)!)
@@ -322,7 +341,7 @@ static const CGFloat kAnimationTime = 1;
         
         SCNGeometry *geo = _myNode.geometry;
         SCNMaterial *secondMaterial = _myNode.geometry.materials[2];
-        secondMaterial.multiply.contents = layerImage;
+        secondMaterial.multiply.contents = togetherImage;
         secondMaterial.multiply.wrapS = SCNWrapModeClamp;
         secondMaterial.multiply.wrapT = SCNWrapModeClamp;
         secondMaterial.doubleSided = NO;
@@ -332,7 +351,7 @@ static const CGFloat kAnimationTime = 1;
         secondMaterial.locksAmbientWithDiffuse = YES;
         
         SCNMatrix4 rotateMatri = SCNMatrix4MakeRotation(1.6, 0, 0, -1);
-        SCNMatrix4 transMatri = SCNMatrix4MakeTranslation(0.03, 1, 0);
+        SCNMatrix4 transMatri = SCNMatrix4MakeTranslation(0.03, 1.1, 0);
         secondMaterial.multiply.contentsTransform = SCNMatrix4Mult(rotateMatri, transMatri);
         
         [_myNode.geometry replaceMaterialAtIndex:2 withMaterial:secondMaterial];

@@ -19,6 +19,7 @@
 		0A245A771ED07DF60064D63D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A245A761ED07DF60064D63D /* art.scnassets */; };
 		0A245A7A1ED1A2570064D63D /* AchievementCardLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A791ED1A2560064D63D /* AchievementCardLayer.m */; };
 		0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A7C1ED1A2940064D63D /* AchievementCardView.m */; };
+		0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */; };
 		0AFCEC401ED58075004FAF6A /* stars.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3E1ED58075004FAF6A /* stars.scnp */; };
 		0AFCEC411ED58075004FAF6A /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3F1ED58075004FAF6A /* star.png */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,8 @@
 		0A245A791ED1A2560064D63D /* AchievementCardLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardLayer.m; sourceTree = "<group>"; };
 		0A245A7B1ED1A2940064D63D /* AchievementCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementCardView.h; sourceTree = "<group>"; };
 		0A245A7C1ED1A2940064D63D /* AchievementCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardView.m; sourceTree = "<group>"; };
+		0AE57E2E1EEBDC05002B6DF4 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
+		0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
 		0AFCEC3E1ED58075004FAF6A /* stars.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = stars.scnp; sourceTree = "<group>"; };
 		0AFCEC3F1ED58075004FAF6A /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +99,8 @@
 		0A245A341ED07CE10064D63D = {
 			isa = PBXGroup;
 			children = (
+				0AE57E2E1EEBDC05002B6DF4 /* UIImage+Crop.h */,
+				0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */,
 				0AFCEC3E1ED58075004FAF6A /* stars.scnp */,
 				0AFCEC3F1ED58075004FAF6A /* star.png */,
 				0A245A3F1ED07CE10064D63D /* LLYSceneKitDemo */,
@@ -313,6 +318,7 @@
 				0A245A481ED07CE10064D63D /* ViewController.m in Sources */,
 				0A245A7A1ED1A2570064D63D /* AchievementCardLayer.m in Sources */,
 				0A245A451ED07CE10064D63D /* AppDelegate.m in Sources */,
+				0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */,
 				0A245A421ED07CE10064D63D /* main.m in Sources */,
 				0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */,
 			);

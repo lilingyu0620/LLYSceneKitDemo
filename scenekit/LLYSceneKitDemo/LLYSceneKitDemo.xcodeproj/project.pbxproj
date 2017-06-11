@@ -17,7 +17,6 @@
 		0A245A661ED07CE10064D63D /* LLYSceneKitDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A651ED07CE10064D63D /* LLYSceneKitDemoUITests.m */; };
 		0A245A751ED07D5F0064D63D /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A245A741ED07D5F0064D63D /* SceneKit.framework */; };
 		0A245A771ED07DF60064D63D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A245A761ED07DF60064D63D /* art.scnassets */; };
-		0A245A7A1ED1A2570064D63D /* AchievementCardLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A791ED1A2560064D63D /* AchievementCardLayer.m */; };
 		0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A7C1ED1A2940064D63D /* AchievementCardView.m */; };
 		0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */; };
 		0AFCEC401ED58075004FAF6A /* stars.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3E1ED58075004FAF6A /* stars.scnp */; };
@@ -60,8 +59,6 @@
 		0A245A671ED07CE10064D63D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A245A741ED07D5F0064D63D /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		0A245A761ED07DF60064D63D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		0A245A781ED1A2560064D63D /* AchievementCardLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementCardLayer.h; sourceTree = "<group>"; };
-		0A245A791ED1A2560064D63D /* AchievementCardLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardLayer.m; sourceTree = "<group>"; };
 		0A245A7B1ED1A2940064D63D /* AchievementCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementCardView.h; sourceTree = "<group>"; };
 		0A245A7C1ED1A2940064D63D /* AchievementCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardView.m; sourceTree = "<group>"; };
 		0AE57E2E1EEBDC05002B6DF4 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
@@ -126,8 +123,6 @@
 			children = (
 				0A245A7B1ED1A2940064D63D /* AchievementCardView.h */,
 				0A245A7C1ED1A2940064D63D /* AchievementCardView.m */,
-				0A245A781ED1A2560064D63D /* AchievementCardLayer.h */,
-				0A245A791ED1A2560064D63D /* AchievementCardLayer.m */,
 				0A245A761ED07DF60064D63D /* art.scnassets */,
 				0A245A431ED07CE10064D63D /* AppDelegate.h */,
 				0A245A441ED07CE10064D63D /* AppDelegate.m */,
@@ -316,7 +311,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A245A481ED07CE10064D63D /* ViewController.m in Sources */,
-				0A245A7A1ED1A2570064D63D /* AchievementCardLayer.m in Sources */,
 				0A245A451ED07CE10064D63D /* AppDelegate.m in Sources */,
 				0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */,
 				0A245A421ED07CE10064D63D /* main.m in Sources */,

@@ -24,8 +24,6 @@ static const CGFloat kAnimationTime = 1;
 @property (nonatomic,strong) SCNNode *bottomLightNode;
 
 
-
-
 @property (nonatomic,strong) SCNNode *ambientLightNode;
 @property (nonatomic,strong) SCNNode *spotNode;
 
@@ -276,7 +274,7 @@ static const CGFloat kAnimationTime = 1;
         _myNode.scale = SCNVector3Make(0.02, 0.02, 0.02);
         _myNode.geometry.firstMaterial.doubleSided = NO;
         _myNode.geometry.firstMaterial.locksAmbientWithDiffuse = NO;
-        _myNode.castsShadow = NO;
+        _myNode.castsShadow = YES;
 
         
         NSDictionary *attrDic = @{
@@ -449,15 +447,27 @@ static const CGFloat kAnimationTime = 1;
     
     if (!_topLightNode) {
         
+//        _topLightNode = [SCNNode node];
+//        SCNLight *light = [SCNLight light];
+//        light.type = SCNLightTypeOmni;
+//        light.castsShadow = true;
+//        light.color = [UIColor whiteColor];
+//        light.shadowMode = SCNShadowModeForward;
+//        _topLightNode.light = light;
+//        _topLightNode.position = SCNVector3Make(0, 8, 5);
+//        _topLightNode.rotation = SCNVector4Make(1, 0, 0, -M_PI/3);
+        
+        SCNLight *omniLight = [SCNLight light];
+        omniLight.type = SCNLightTypeOmni;
+        omniLight.color = [UIColor whiteColor];
+        omniLight.castsShadow = YES;
+        omniLight.shadowMode = SCNShadowModeForward;
+        omniLight.attenuationStartDistance = 10;//衰减开始距离
+        omniLight.attenuationEndDistance = 15;//衰减结束距离
         _topLightNode = [SCNNode node];
-        SCNLight *light = [SCNLight light];
-        light.type = SCNLightTypeSpot;
-        light.castsShadow = true;
-        light.color = [UIColor whiteColor];
-        light.shadowMode = SCNShadowModeForward;
-        _topLightNode.light = light;
-        _topLightNode.position = SCNVector3Make(0, 8, 5);
-        _topLightNode.rotation = SCNVector4Make(1, 0, 0, -M_PI/3);
+        _topLightNode.position = SCNVector3Make(-3.5, 4.5, 10);
+        _topLightNode.light  = omniLight;
+
     }
     
     return _topLightNode;
@@ -496,19 +506,29 @@ static const CGFloat kAnimationTime = 1;
 - (SCNNode *)spotNode{
 
     if (!_spotNode) {
+//        SCNLight *spotLight = [SCNLight light];// 创建光对象
+//        spotLight.type = SCNLightTypeSpot;// 设置类型
+//        spotLight.color = [UIColor whiteColor]; // 设置光的颜色
+//        spotLight.castsShadow = YES;
+//        spotLight.shadowMode = SCNShadowModeForward;
+////        spotLight.zNear = 0.1;
+////        spotLight.zFar = 5;
+//        spotLight.attenuationStartDistance = 6;
+//        spotLight.attenuationEndDistance = 9;
+//        _spotNode = [SCNNode node];
+//        _spotNode.position = SCNVector3Make(-2, 3, 5); //设置光源节点的位置
+//        _spotNode.light  = spotLight;
         
-        
-        SCNLight *spotLight = [SCNLight light];// 创建光对象
-        spotLight.type = SCNLightTypeOmni;// 设置类型
-        spotLight.color = [UIColor whiteColor]; // 设置光的颜色
+        SCNLight *spotLight = [SCNLight light];
+        spotLight.type = SCNLightTypeSpot;
+        spotLight.color = [UIColor whiteColor];
         spotLight.castsShadow = YES;
         spotLight.shadowMode = SCNShadowModeForward;
-//        spotLight.zNear = 0.1;
-//        spotLight.zFar = 5;
-        spotLight.attenuationStartDistance = 6;
-        spotLight.attenuationEndDistance = 9;
+        spotLight.shadowRadius = 5;
+        spotLight.shadowSampleCount = 100;
         _spotNode = [SCNNode node];
-        _spotNode.position = SCNVector3Make(-2, 3, 5); //设置光源节点的位置
+        _spotNode.position = SCNVector3Make(-8, 8, 6);
+        _spotNode.rotation = SCNVector4Make(1, 1, 0, -M_PI_2/2);
         _spotNode.light  = spotLight;
     }
     
@@ -541,7 +561,7 @@ static const CGFloat kAnimationTime = 1;
     
     [self.myScene.rootNode addChildNode:self.rightLightNode];
 
-//    [self.myScene.rootNode addChildNode:self.topLightNode];
+    [self.myScene.rootNode addChildNode:self.topLightNode];
     
     // create and add an ambient light to the scene
 //    [self.myScene.rootNode addChildNode:self.ambientLightNode];

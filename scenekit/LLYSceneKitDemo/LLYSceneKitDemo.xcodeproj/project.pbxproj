@@ -18,7 +18,15 @@
 		0A245A751ED07D5F0064D63D /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A245A741ED07D5F0064D63D /* SceneKit.framework */; };
 		0A245A771ED07DF60064D63D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A245A761ED07DF60064D63D /* art.scnassets */; };
 		0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A245A7C1ED1A2940064D63D /* AchievementCardView.m */; };
-		0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */; };
+		0ABCFF1F1F30199D0057E89E /* OCNMyMedalShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF1E1F30199D0057E89E /* OCNMyMedalShowView.m */; };
+		0ABCFF241F3019F90057E89E /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF211F3019F90057E89E /* UIImage+Crop.m */; };
+		0ABCFF251F3019F90057E89E /* UIImage+OCNImageMerge.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF231F3019F90057E89E /* UIImage+OCNImageMerge.m */; };
+		0ABCFF281F301B070057E89E /* UIButton+OCNEnlargeArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF271F301B070057E89E /* UIButton+OCNEnlargeArea.m */; };
+		0ABCFF2B1F301CE40057E89E /* UILabel+imageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF2A1F301CE40057E89E /* UILabel+imageLabel.m */; };
+		0ABCFF2E1F301D330057E89E /* OCNInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF2D1F301D330057E89E /* OCNInsetsLabel.m */; };
+		0ABCFF311F301DD90057E89E /* OCNCABaseAnimationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFF301F301DD90057E89E /* OCNCABaseAnimationCreator.m */; };
+		0ABCFF331F301E5A0057E89E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABCFF321F301E5A0057E89E /* QuartzCore.framework */; };
+		0ABCFF351F301F330057E89E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABCFF341F301F330057E89E /* Foundation.framework */; };
 		0AFCEC401ED58075004FAF6A /* stars.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3E1ED58075004FAF6A /* stars.scnp */; };
 		0AFCEC411ED58075004FAF6A /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFCEC3F1ED58075004FAF6A /* star.png */; };
 /* End PBXBuildFile section */
@@ -61,8 +69,22 @@
 		0A245A761ED07DF60064D63D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		0A245A7B1ED1A2940064D63D /* AchievementCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementCardView.h; sourceTree = "<group>"; };
 		0A245A7C1ED1A2940064D63D /* AchievementCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementCardView.m; sourceTree = "<group>"; };
-		0AE57E2E1EEBDC05002B6DF4 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
-		0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		0ABCFF1D1F30199D0057E89E /* OCNMyMedalShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCNMyMedalShowView.h; sourceTree = "<group>"; };
+		0ABCFF1E1F30199D0057E89E /* OCNMyMedalShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCNMyMedalShowView.m; sourceTree = "<group>"; };
+		0ABCFF201F3019F90057E89E /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
+		0ABCFF211F3019F90057E89E /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		0ABCFF221F3019F90057E89E /* UIImage+OCNImageMerge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OCNImageMerge.h"; sourceTree = "<group>"; };
+		0ABCFF231F3019F90057E89E /* UIImage+OCNImageMerge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+OCNImageMerge.m"; sourceTree = "<group>"; };
+		0ABCFF261F301B070057E89E /* UIButton+OCNEnlargeArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+OCNEnlargeArea.h"; sourceTree = "<group>"; };
+		0ABCFF271F301B070057E89E /* UIButton+OCNEnlargeArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+OCNEnlargeArea.m"; sourceTree = "<group>"; };
+		0ABCFF291F301CE40057E89E /* UILabel+imageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+imageLabel.h"; sourceTree = "<group>"; };
+		0ABCFF2A1F301CE40057E89E /* UILabel+imageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+imageLabel.m"; sourceTree = "<group>"; };
+		0ABCFF2C1F301D330057E89E /* OCNInsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCNInsetsLabel.h; sourceTree = "<group>"; };
+		0ABCFF2D1F301D330057E89E /* OCNInsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCNInsetsLabel.m; sourceTree = "<group>"; };
+		0ABCFF2F1F301DD90057E89E /* OCNCABaseAnimationCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCNCABaseAnimationCreator.h; sourceTree = "<group>"; };
+		0ABCFF301F301DD90057E89E /* OCNCABaseAnimationCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCNCABaseAnimationCreator.m; sourceTree = "<group>"; };
+		0ABCFF321F301E5A0057E89E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0ABCFF341F301F330057E89E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0AFCEC3E1ED58075004FAF6A /* stars.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = stars.scnp; sourceTree = "<group>"; };
 		0AFCEC3F1ED58075004FAF6A /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABCFF351F301F330057E89E /* Foundation.framework in Frameworks */,
+				0ABCFF331F301E5A0057E89E /* QuartzCore.framework in Frameworks */,
 				0A245A751ED07D5F0064D63D /* SceneKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,8 +120,6 @@
 		0A245A341ED07CE10064D63D = {
 			isa = PBXGroup;
 			children = (
-				0AE57E2E1EEBDC05002B6DF4 /* UIImage+Crop.h */,
-				0AE57E2F1EEBDC05002B6DF4 /* UIImage+Crop.m */,
 				0AFCEC3E1ED58075004FAF6A /* stars.scnp */,
 				0AFCEC3F1ED58075004FAF6A /* star.png */,
 				0A245A3F1ED07CE10064D63D /* LLYSceneKitDemo */,
@@ -121,8 +143,22 @@
 		0A245A3F1ED07CE10064D63D /* LLYSceneKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				0ABCFF2F1F301DD90057E89E /* OCNCABaseAnimationCreator.h */,
+				0ABCFF301F301DD90057E89E /* OCNCABaseAnimationCreator.m */,
+				0ABCFF2C1F301D330057E89E /* OCNInsetsLabel.h */,
+				0ABCFF2D1F301D330057E89E /* OCNInsetsLabel.m */,
+				0ABCFF261F301B070057E89E /* UIButton+OCNEnlargeArea.h */,
+				0ABCFF271F301B070057E89E /* UIButton+OCNEnlargeArea.m */,
+				0ABCFF201F3019F90057E89E /* UIImage+Crop.h */,
+				0ABCFF211F3019F90057E89E /* UIImage+Crop.m */,
+				0ABCFF221F3019F90057E89E /* UIImage+OCNImageMerge.h */,
+				0ABCFF231F3019F90057E89E /* UIImage+OCNImageMerge.m */,
+				0ABCFF1D1F30199D0057E89E /* OCNMyMedalShowView.h */,
+				0ABCFF1E1F30199D0057E89E /* OCNMyMedalShowView.m */,
 				0A245A7B1ED1A2940064D63D /* AchievementCardView.h */,
 				0A245A7C1ED1A2940064D63D /* AchievementCardView.m */,
+				0ABCFF291F301CE40057E89E /* UILabel+imageLabel.h */,
+				0ABCFF2A1F301CE40057E89E /* UILabel+imageLabel.m */,
 				0A245A761ED07DF60064D63D /* art.scnassets */,
 				0A245A431ED07CE10064D63D /* AppDelegate.h */,
 				0A245A441ED07CE10064D63D /* AppDelegate.m */,
@@ -166,6 +202,8 @@
 		0A245A731ED07D5F0064D63D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0ABCFF341F301F330057E89E /* Foundation.framework */,
+				0ABCFF321F301E5A0057E89E /* QuartzCore.framework */,
 				0A245A741ED07D5F0064D63D /* SceneKit.framework */,
 			);
 			name = Frameworks;
@@ -310,11 +348,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABCFF281F301B070057E89E /* UIButton+OCNEnlargeArea.m in Sources */,
+				0ABCFF2B1F301CE40057E89E /* UILabel+imageLabel.m in Sources */,
+				0ABCFF311F301DD90057E89E /* OCNCABaseAnimationCreator.m in Sources */,
 				0A245A481ED07CE10064D63D /* ViewController.m in Sources */,
+				0ABCFF251F3019F90057E89E /* UIImage+OCNImageMerge.m in Sources */,
 				0A245A451ED07CE10064D63D /* AppDelegate.m in Sources */,
-				0AE57E301EEBDC05002B6DF4 /* UIImage+Crop.m in Sources */,
+				0ABCFF1F1F30199D0057E89E /* OCNMyMedalShowView.m in Sources */,
+				0ABCFF241F3019F90057E89E /* UIImage+Crop.m in Sources */,
 				0A245A421ED07CE10064D63D /* main.m in Sources */,
 				0A245A7D1ED1A2940064D63D /* AchievementCardView.m in Sources */,
+				0ABCFF2E1F301D330057E89E /* OCNInsetsLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
